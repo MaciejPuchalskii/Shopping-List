@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,9 +18,6 @@ namespace ShoppingList
         {
             InitializeComponent();
         }
-
-    
-
         private void btnDodaj_Click(object sender, EventArgs e)
         {
             if(progressBar1.Value <100)
@@ -70,6 +69,49 @@ namespace ShoppingList
 
         private void btnCzysc_Click(object sender, EventArgs e)
         {
+            listBox1.Items.Clear();
+            AktualizujProgres();
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Clear();
+            AktualizujProgres();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //OpenFileDialog ofd = new OpenFileDialog();
+            //ofd.Title = "Open";
+            //ofd.Filter = "Text Document(*.txt)|*.txt|All Files(*.*)|*.*";
+            //if (ofd.ShowDialog() == DialogResult.OK)
+            //{
+            //    StreamReader sr = new StreamReader(Text);
+            //    for (int i = 0; i < 10; i++)
+            //    {
+            //        listBox1.Items[i] = sr.ReadLine();
+            //    }
+            //    sr.Close();
+                
+            //}
+
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Title = "Save";
+            sfd.Filter = "Text Document(*.txt)|*.txt|All Files(*.*)|*.*";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                StreamWriter writer = new StreamWriter(sfd.FileName);
+                for(int i = 0;i< listBox1.Items.Count; i++)
+                {
+                    writer.WriteLine(listBox1.Items[i].ToString());
+                }
+                writer.Close();
+            }
+            sfd.Dispose();
             listBox1.Items.Clear();
             AktualizujProgres();
         }
